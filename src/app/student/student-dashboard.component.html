@@ -1,0 +1,68 @@
+<div class="student-dashboard">
+  <header class="dashboard-header">
+    <h1>Student Dashboard</h1>
+    <div class="user-info">
+      <span>Welcome, {{ currentUser?.name }}</span>
+      <button (click)="logout()" class="logout-button">Logout</button>
+    </div>
+  </header>
+
+  <div class="dashboard-content">
+    <div class="enrolled-courses">
+      <h2>My Courses</h2>
+      <div class="course-grid">
+        <div class="course-card">
+          <h3>Web Development</h3>
+          <p class="course-progress">Progress: 75%</p>
+          <div class="progress-bar">
+            <div class="progress" style="width: 75%"></div>
+          </div>
+          <button class="continue-button">Continue Learning</button>
+        </div>
+        <div class="course-card">
+          <h3>Data Science</h3>
+          <p class="course-progress">Progress: 45%</p>
+          <div class="progress-bar">
+            <div class="progress" style="width: 45%"></div>
+          </div>
+          <button class="continue-button">Continue Learning</button>
+        </div>
+        <div class="course-card">
+          <h3>Machine Learning</h3>
+          <p class="course-progress">Progress: 30%</p>
+          <div class="progress-bar">
+            <div class="progress" style="width: 30%"></div>
+          </div>
+          <button class="continue-button">Continue Learning</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="upcoming-assignments">
+      <h2>Upcoming Assignments</h2>
+      <div class="assignment-list">
+        <div class="assignment-item">
+          <div class="assignment-info">
+            <h3>Web Development Project</h3>
+            <p>Due: March 15, 2024</p>
+          </div>
+          <span class="assignment-status pending">Pending</span>
+        </div>
+        <div class="assignment-item">
+          <div class="assignment-info">
+            <h3>Data Analysis Report</h3>
+            <p>Due: March 20, 2024</p>
+          </div>
+          <span class="assignment-status in-progress">In Progress</span>
+        </div>
+        <div class="assignment-item">
+          <div class="assignment-info">
+            <h3>Machine Learning Quiz</h3>
+            <p>Due: March 25, 2024</p>
+          </div>
+          <span class="assignment-status not-started">Not Started</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div> 
