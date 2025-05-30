@@ -1,0 +1,48 @@
+<div class="admin-dashboard">
+  <header class="dashboard-header">
+    <h1>Admin Dashboard</h1>
+    <div class="user-info">
+      <span>Welcome, {{ currentUser?.name }}</span>
+      <button (click)="logout()" class="logout-button">Logout</button>
+    </div>
+  </header>
+
+  <div class="dashboard-content">
+    <div class="stats-grid">
+      <div class="stat-card">
+        <h3>Total Students</h3>
+        <p class="stat-number">1,234</p>
+      </div>
+      <div class="stat-card">
+        <h3>Active Courses</h3>
+        <p class="stat-number">45</p>
+      </div>
+      <div class="stat-card">
+        <h3>Total Revenue</h3>
+        <p class="stat-number">$123,456</p>
+      </div>
+      <div class="stat-card">
+        <h3>Pending Approvals</h3>
+        <p class="stat-number">12</p>
+      </div>
+    </div>
+
+    <div class="recent-activity">
+      <h2>Recent Activity</h2>
+      <div class="activity-list">
+        <div class="activity-item">
+          <span class="activity-time">10:30 AM</span>
+          <span class="activity-text">New student registration: John Doe</span>
+        </div>
+        <div class="activity-item">
+          <span class="activity-time">09:45 AM</span>
+          <span class="activity-text">Course "Web Development" updated</span>
+        </div>
+        <div class="activity-item">
+          <span class="activity-time">09:15 AM</span>
+          <span class="activity-text">Payment received from Jane Smith</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div> 
