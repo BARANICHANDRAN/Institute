@@ -4,7 +4,7 @@ import { AdminDashboardComponent } from './admin/admin-dashboard.component';
 import { StudentDashboardComponent } from './student/student-dashboard.component';
 
 export const routes: Routes = [
-  { path: 'login', component: LoginComponent },
+  { path: '', component: LoginComponent },
   { 
     path: 'admin',
     component: AdminDashboardComponent,
@@ -28,6 +28,5 @@ export const routes: Routes = [
       { path: 'grades', component: StudentDashboardComponent },
       { path: 'profile', component: StudentDashboardComponent }
     ]
-  },
-  { path: '', redirectTo: '/login', pathMatch: 'full' }
+  }
 ];
