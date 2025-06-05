@@ -2,7 +2,7 @@
   <header class="dashboard-header">
     <h1>Student Dashboard</h1>
     <div class="user-info">
-      <span>Welcome, {{ currentUser?.name }}</span>
+      <span>Welcome, {{ currentUser?.firstName }} {{ currentUser?.lastName }}</span>
       <button (click)="logout()" class="logout-button">Logout</button>
     </div>
   </header>

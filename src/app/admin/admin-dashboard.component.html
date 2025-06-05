@@ -1,66 +1,8 @@
-<<<<<<< HEAD
-=======
-<<<<<<< HEAD
->>>>>>> fb9acbc5a4a316a7e7e0c1de70b2d9af38163177
-<div class="admin-container">
-  <div class="admin-content">
-    <div class="dashboard-header">
-      <h1>Admin Dashboard</h1>
-      <div class="user-info">
-        <span>Welcome, {{ currentUser?.name }}</span>
-        <button class="logout-button" (click)="logout()">Logout</button>
-<<<<<<< HEAD
-      </div>
-    </div>
-
-    <div class="dashboard-content">
-      <div class="action-bar">
-        <button class="add-student-button" (click)="openAddStudentModal()">
-          Add New Student
-        </button>
-      </div>
-
-      <div class="students-section">
-        <h2>Students List</h2>
-        <div class="error-message" *ngIf="errorMessage">{{ errorMessage }}</div>
-        
-        <div class="students-grid">
-          <div class="student-card" *ngFor="let student of students">
-            <h3>{{ student.name }}</h3>
-            <p><strong>Email:</strong> {{ student.email }}</p>
-            <p><strong>Phone:</strong> {{ student.phone }}</p>
-            <p><strong>Course:</strong> {{ student.course }}</p>
-            <p><strong>Incharge:</strong> {{ student.incharge }}</p>
-          </div>
-=======
-      </div>
-    </div>
-
-    <div class="dashboard-content">
-      <div class="action-bar">
-        <button class="add-student-button" (click)="openAddStudentModal()">
-          Add New Student
-        </button>
-      </div>
-
-      <div class="students-section">
-        <h2>Students List</h2>
-        <div class="error-message" *ngIf="errorMessage">{{ errorMessage }}</div>
-        
-        <div class="students-grid">
-          <div class="student-card" *ngFor="let student of students">
-            <h3>{{ student.name }}</h3>
-            <p><strong>Email:</strong> {{ student.email }}</p>
-            <p><strong>Phone:</strong> {{ student.phone }}</p>
-            <p><strong>Course:</strong> {{ student.course }}</p>
-            <p><strong>Incharge:</strong> {{ student.incharge }}</p>
-          </div>
-=======
 <div class="admin-dashboard">
   <header class="dashboard-header">
     <h1>Admin Dashboard</h1>
     <div class="user-info">
-      <span>Welcome, {{ currentUser?.name }}</span>
+      <span>Welcome, {{ currentUser?.firstName }} {{ currentUser?.lastName }}</span>
       <button (click)="logout()" class="logout-button">Logout</button>
     </div>
   </header>
@@ -69,55 +11,57 @@
     <div class="stats-grid">
       <div class="stat-card">
         <h3>Total Students</h3>
-        <p class="stat-number">1,234</p>
+        <p class="stat-number">{{ dashboardStats?.totalStudents || 0 }}</p>
       </div>
       <div class="stat-card">
         <h3>Active Courses</h3>
-        <p class="stat-number">45</p>
+        <p class="stat-number">{{ dashboardStats?.activeCourses || 0 }}</p>
       </div>
       <div class="stat-card">
         <h3>Total Revenue</h3>
-        <p class="stat-number">$123,456</p>
+        <p class="stat-number">${{ dashboardStats?.totalRevenue || 0 }}</p>
       </div>
       <div class="stat-card">
         <h3>Pending Approvals</h3>
-        <p class="stat-number">12</p>
+        <p class="stat-number">{{ dashboardStats?.pendingApprovals || 0 }}</p>
+      </div>
+    </div>
+
+    <div class="action-bar">
+      <button class="add-student-button" (click)="openAddStudentModal()">
+        Add New Student
+      </button>
+    </div>
+
+    <div class="students-section">
+      <h2>Students List</h2>
+      <div class="error-message" *ngIf="errorMessage">{{ errorMessage }}</div>
+      
+      <div class="students-grid">
+        <div class="student-card" *ngFor="let student of students">
+          <h3>{{ student.firstName }} {{ student.lastName }}</h3>
+          <p><strong>Email:</strong> {{ student.email }}</p>
+          <p><strong>Phone:</strong> {{ student.phoneNumber }}</p>
+          <p><strong>Course:</strong> {{ student.course }}</p>
+          <p><strong>Incharge:</strong> {{ student.incharge }}</p>
+        </div>
       </div>
     </div>
 
     <div class="recent-activity">
       <h2>Recent Activity</h2>
       <div class="activity-list">
-        <div class="activity-item">
-          <span class="activity-time">10:30 AM</span>
-          <span class="activity-text">New student registration: John Doe</span>
-        </div>
-        <div class="activity-item">
-          <span class="activity-time">09:45 AM</span>
-          <span class="activity-text">Course "Web Development" updated</span>
-        </div>
-        <div class="activity-item">
-          <span class="activity-time">09:15 AM</span>
-          <span class="activity-text">Payment received from Jane Smith</span>
->>>>>>> ec495df6874c4b6ecbd769d4aaf173f241055fbe
->>>>>>> fb9acbc5a4a316a7e7e0c1de70b2d9af38163177
+        <div class="activity-item" *ngFor="let activity of dashboardStats?.recentActivities || []">
+          <span class="activity-time">{{ activity.time }}</span>
+          <span class="activity-text">{{ activity.text }}</span>
         </div>
       </div>
     </div>
   </div>
-<<<<<<< HEAD
-=======
-<<<<<<< HEAD
->>>>>>> fb9acbc5a4a316a7e7e0c1de70b2d9af38163177
 
   <app-add-student-modal
     *ngIf="showAddStudentModal"
     (studentAdded)="onStudentAdded()"
     (close)="closeAddStudentModal()">
   </app-add-student-modal>
-<<<<<<< HEAD
-=======
-=======
->>>>>>> ec495df6874c4b6ecbd769d4aaf173f241055fbe
->>>>>>> fb9acbc5a4a316a7e7e0c1de70b2d9af38163177
 </div> 

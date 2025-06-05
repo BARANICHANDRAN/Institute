@@ -1,12 +1,16 @@
 export interface Student {
-  id?: number;
-  name: string;
+  id: number;
+  firstName: string;
+  lastName: string;
   email: string;
-  phone: string;
+  phoneNumber: string;
   course: string;
   incharge: string;
-  createdAt?: Date;
-  updatedAt?: Date;
+  createdAt: string;
+  updatedAt: string;
+  isActive: boolean;
+  profileImage?: string;
+  address?: string;
 }
 
 export interface Course {

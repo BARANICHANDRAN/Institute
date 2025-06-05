@@ -1,5 +1,5 @@
-<div class="modal-overlay">
-  <div class="modal-content">
+<div class="modal-overlay" (click)="closeModal()">
+  <div class="modal-content" (click)="$event.stopPropagation()">
     <div class="modal-header">
       <h2>Add New Student</h2>
       <button class="close-button" (click)="closeModal()">&times;</button>
@@ -7,19 +7,39 @@
 
     <form [formGroup]="studentForm" (ngSubmit)="onSubmit()" class="student-form">
       <div class="form-group">
-        <label for="name">Name</label>
-        <input type="text" id="name" formControlName="name" placeholder="Enter student name">
-        <div class="error-message" *ngIf="studentForm.get('name')?.errors?.['required'] && studentForm.get('name')?.touched">
-          Name is required
+        <label for="firstName">First Name</label>
+        <input
+          type="text"
+          id="firstName"
+          formControlName="firstName"
+          placeholder="Enter first name"
+        />
+        <div class="error-message" *ngIf="studentForm.get('firstName')?.errors?.['required'] && studentForm.get('firstName')?.touched">
+          First name is required
         </div>
-        <div class="error-message" *ngIf="studentForm.get('name')?.errors?.['minlength'] && studentForm.get('name')?.touched">
-          Name must be at least 3 characters
+      </div>
+
+      <div class="form-group">
+        <label for="lastName">Last Name</label>
+        <input
+          type="text"
+          id="lastName"
+          formControlName="lastName"
+          placeholder="Enter last name"
+        />
+        <div class="error-message" *ngIf="studentForm.get('lastName')?.errors?.['required'] && studentForm.get('lastName')?.touched">
+          Last name is required
         </div>
       </div>
 
       <div class="form-group">
         <label for="email">Email</label>
-        <input type="email" id="email" formControlName="email" placeholder="Enter email address">
+        <input
+          type="email"
+          id="email"
+          formControlName="email"
+          placeholder="Enter email"
+        />
         <div class="error-message" *ngIf="studentForm.get('email')?.errors?.['required'] && studentForm.get('email')?.touched">
           Email is required
         </div>
@@ -32,15 +52,17 @@
       </div>
 
       <div class="form-group">
-        <label for="phone">Phone</label>
-        <input type="tel" id="phone" formControlName="phone" placeholder="Enter phone number">
-        <div class="error-message" *ngIf="studentForm.get('phone')?.errors?.['required'] && studentForm.get('phone')?.touched">
+        <label for="phoneNumber">Phone Number</label>
+        <input
+          type="tel"
+          id="phoneNumber"
+          formControlName="phoneNumber"
+          placeholder="Enter phone number"
+        />
+        <div class="error-message" *ngIf="studentForm.get('phoneNumber')?.errors?.['required'] && studentForm.get('phoneNumber')?.touched">
           Phone number is required
         </div>
-        <div class="error-message" *ngIf="studentForm.get('phone')?.errors?.['pattern'] && studentForm.get('phone')?.touched">
-          Please enter a valid 10-digit phone number
-        </div>
-        <div class="error-message" *ngIf="studentForm.get('phone')?.errors?.['phoneExists']">
+        <div class="error-message" *ngIf="studentForm.get('phoneNumber')?.errors?.['phoneExists']">
           This phone number is already registered
         </div>
       </div>
@@ -49,33 +71,37 @@
         <label for="course">Course</label>
         <select id="course" formControlName="course">
           <option value="">Select a course</option>
-          <option *ngFor="let course of courses" [value]="course.id">{{course.name}}</option>
+          <option *ngFor="let course of courses" [value]="course.id">
+            {{ course.name }}
+          </option>
         </select>
         <div class="error-message" *ngIf="studentForm.get('course')?.errors?.['required'] && studentForm.get('course')?.touched">
-          Please select a course
+          Course is required
         </div>
       </div>
 
       <div class="form-group">
-        <label for="incharge">Incharge</label>
+        <label for="incharge">Course Incharge</label>
         <select id="incharge" formControlName="incharge">
           <option value="">Select an incharge</option>
-          <option *ngFor="let incharge of incharges" [value]="incharge.id">{{incharge.name}}</option>
+          <option *ngFor="let incharge of incharges" [value]="incharge.id">
+            {{ incharge.name }}
+          </option>
         </select>
         <div class="error-message" *ngIf="studentForm.get('incharge')?.errors?.['required'] && studentForm.get('incharge')?.touched">
-          Please select an incharge
+          Course incharge is required
         </div>
-      </div>
-
-      <div class="form-actions">
-        <button type="button" class="cancel-button" (click)="closeModal()">Cancel</button>
-        <button type="submit" class="submit-button" [disabled]="studentForm.invalid || isSubmitting">
-          {{ isSubmitting ? 'Adding...' : 'Add Student' }}
-        </button>
       </div>
 
       <div class="error-message" *ngIf="errorMessage">
         {{ errorMessage }}
+      </div>
+
+      <div class="form-actions">
+        <button type="button" class="cancel-button" (click)="closeModal()">Cancel</button>
+        <button type="submit" class="submit-button" [disabled]="studentForm.invalid || isLoading">
+          {{ isLoading ? 'Adding...' : 'Add Student' }}
+        </button>
       </div>
     </form>
   </div>

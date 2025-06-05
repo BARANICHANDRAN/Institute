@@ -42,17 +42,6 @@
       <button type="submit" [disabled]="!loginForm.form.valid || isLoading" class="login-button">
         {{ isLoading ? 'Logging in...' : 'Login' }}
       </button>
-
-<<<<<<< HEAD
-    </form>
-  </div>
-</div>
-=======
-<<<<<<< HEAD
-    </form>
-  </div>
-</div>
-=======
       <div class="signup-link">
         <p>New student? <a href="#" (click)="openSignupModal(); $event.preventDefault()">Sign up here</a></p>
       </div>
@@ -60,6 +49,4 @@
   </div>
 </div>
 
-<app-signup *ngIf="showSignupModal" (closeModal)="closeSignupModal()"></app-signup> 
->>>>>>> ec495df6874c4b6ecbd769d4aaf173f241055fbe
->>>>>>> fb9acbc5a4a316a7e7e0c1de70b2d9af38163177
+<app-signup *ngIf="showSignupModal" (closeModal)="closeSignupModal()"></app-signup>

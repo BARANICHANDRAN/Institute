@@ -1,8 +1,8 @@
-import { Component, OnInit, Output, EventEmitter } from '@angular/core';
-import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
+import { Component, EventEmitter, Output } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { FormsModule, ReactiveFormsModule, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { StudentService } from '../../services/student.service';
-import { Course, Incharge } from '../../models/student.model';
+import { Student, Course, Incharge } from '../../models/student.model';
 import { debounceTime, distinctUntilChanged, switchMap } from 'rxjs/operators';
 
 @Component({
@@ -10,26 +10,27 @@ import { debounceTime, distinctUntilChanged, switchMap } from 'rxjs/operators';
   templateUrl: './add-student-modal.component.html',
   styleUrls: ['./add-student-modal.component.css'],
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule]
+  imports: [CommonModule, FormsModule, ReactiveFormsModule]
 })
-export class AddStudentModalComponent implements OnInit {
+export class AddStudentModalComponent {
   @Output() close = new EventEmitter<void>();
   @Output() studentAdded = new EventEmitter<void>();
 
   studentForm: FormGroup;
   courses: Course[] = [];
   incharges: Incharge[] = [];
-  isSubmitting = false;
-  errorMessage = '';
+  errorMessage: string = '';
+  isLoading: boolean = false;
 
   constructor(
     private fb: FormBuilder,
     private studentService: StudentService
   ) {
     this.studentForm = this.fb.group({
-      name: ['', [Validators.required, Validators.minLength(3)]],
+      firstName: ['', Validators.required],
+      lastName: ['', Validators.required],
       email: ['', [Validators.required, Validators.email]],
-      phone: ['', [Validators.required, Validators.pattern('^[0-9]{10}$')]],
+      phoneNumber: ['', Validators.required],
       course: ['', Validators.required],
       incharge: ['', Validators.required]
     });
@@ -42,7 +43,26 @@ export class AddStudentModalComponent implements OnInit {
     this.setupPhoneValidation();
   }
 
-  closeModal() {
+  onSubmit(): void {
+    if (this.studentForm.valid) {
+      this.isLoading = true;
+      this.errorMessage = '';
+
+      this.studentService.createStudent(this.studentForm.value).subscribe({
+        next: (response: Student) => {
+          this.isLoading = false;
+          this.studentAdded.emit();
+          this.close.emit();
+        },
+        error: (error: any) => {
+          this.isLoading = false;
+          this.errorMessage = error.message || 'Failed to add student';
+        }
+      });
+    }
+  }
+
+  closeModal(): void {
     this.close.emit();
   }
 
@@ -73,31 +93,14 @@ export class AddStudentModalComponent implements OnInit {
   }
 
   private setupPhoneValidation() {
-    this.studentForm.get('phone')?.valueChanges.pipe(
+    this.studentForm.get('phoneNumber')?.valueChanges.pipe(
       debounceTime(500),
       distinctUntilChanged(),
       switchMap(phone => this.studentService.checkPhoneExists(phone))
     ).subscribe(exists => {
       if (exists) {
-        this.studentForm.get('phone')?.setErrors({ phoneExists: true });
+        this.studentForm.get('phoneNumber')?.setErrors({ phoneExists: true });
       }
     });
-  }
-
-  onSubmit() {
-    if (this.studentForm.valid) {
-      this.isSubmitting = true;
-      this.studentService.addStudent(this.studentForm.value).subscribe(
-        response => {
-          this.isSubmitting = false;
-          this.studentForm.reset();
-          this.studentAdded.emit();
-        },
-        error => {
-          this.isSubmitting = false;
-          this.errorMessage = 'Failed to add student';
-        }
-      );
-    }
   }
 } 
