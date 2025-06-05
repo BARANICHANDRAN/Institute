@@ -3,14 +3,13 @@ import { Router } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { AuthService, User } from '../services/auth.service';
-import { SignupComponent } from './signup.component';
 
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.css'],
   standalone: true,
-  imports: [CommonModule, FormsModule, SignupComponent]
+  imports: [CommonModule, FormsModule,]
 })
 export class LoginComponent {
   email: string = '';
@@ -23,11 +22,10 @@ export class LoginComponent {
     private router: Router,
     private authService: AuthService
   ) {}
-
+  
   onSubmit(): void {
     this.isLoading = true;
     this.errorMessage = '';
-
     this.authService.login(this.email, this.password).subscribe({
       next: (user: User) => {
         this.isLoading = false;
@@ -44,11 +42,5 @@ export class LoginComponent {
     });
   }
 
-  openSignupModal(): void {
-    this.showSignupModal = true;
-  }
-
-  closeSignupModal(): void {
-    this.showSignupModal = false;
-  }
+  
 } 

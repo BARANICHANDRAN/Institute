@@ -144,4 +144,73 @@ body {
 
 .activity-text {
   color: #333;
+}
+
+.action-bar {
+  margin-bottom: 24px;
+}
+
+.add-student-button {
+  padding: 12px 24px;
+  background-color: #28a745;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  font-size: 16px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.add-student-button:hover {
+  background-color: #218838;
+}
+
+.students-section {
+  background-color: white;
+  padding: 24px;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.students-section h2 {
+  margin: 0 0 24px 0;
+  color: #333;
+  font-size: 20px;
+}
+
+.students-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 24px;
+}
+
+.student-card {
+  background-color: #f8f9fa;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.student-card h3 {
+  margin: 0 0 16px 0;
+  color: #333;
+  font-size: 18px;
+}
+
+.student-card p {
+  margin: 8px 0;
+  color: #666;
+}
+
+.student-card strong {
+  color: #333;
+}
+
+.error-message {
+  color: #dc3545;
+  margin-bottom: 16px;
+  padding: 12px;
+  background-color: #f8d7da;
+  border-radius: 4px;
+  border: 1px solid #f5c6cb;
 } 
