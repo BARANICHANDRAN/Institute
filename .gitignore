@@ -40,6 +40,15 @@ testem.log
 # System files
 .DS_Store
 Thumbs.db
+<<<<<<< HEAD
 
 # Local Netlify folder
 .netlify
+=======
+<<<<<<< HEAD
+
+# Local Netlify folder
+.netlify
+=======
+>>>>>>> ec495df6874c4b6ecbd769d4aaf173f241055fbe
+>>>>>>> fb9acbc5a4a316a7e7e0c1de70b2d9af38163177
