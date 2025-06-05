@@ -29,4 +29,8 @@ export class StudentDashboardComponent implements OnInit {
     this.authService.logout();
     this.router.navigate(['']);
   }
+<<<<<<< HEAD
 } 
+=======
+} 
+>>>>>>> ec495df6874c4b6ecbd769d4aaf173f241055fbe

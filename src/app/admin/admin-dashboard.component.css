@@ -144,6 +144,7 @@ body {
 
 .activity-text {
   color: #333;
+<<<<<<< HEAD
 }
 
 .action-bar {
@@ -213,4 +214,6 @@ body {
   background-color: #f8d7da;
   border-radius: 4px;
   border: 1px solid #f5c6cb;
+=======
+>>>>>>> ec495df6874c4b6ecbd769d4aaf173f241055fbe
 } 

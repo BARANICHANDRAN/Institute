@@ -43,6 +43,17 @@
         {{ isLoading ? 'Logging in...' : 'Login' }}
       </button>
 
+<<<<<<< HEAD
     </form>
   </div>
 </div>
+=======
+      <div class="signup-link">
+        <p>New student? <a href="#" (click)="openSignupModal(); $event.preventDefault()">Sign up here</a></p>
+      </div>
+    </form>
+  </div>
+</div>
+
+<app-signup *ngIf="showSignupModal" (closeModal)="closeSignupModal()"></app-signup> 
+>>>>>>> ec495df6874c4b6ecbd769d4aaf173f241055fbe

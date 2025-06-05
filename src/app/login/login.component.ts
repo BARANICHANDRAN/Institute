@@ -3,13 +3,21 @@ import { Router } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { AuthService, User } from '../services/auth.service';
+<<<<<<< HEAD
+=======
+import { SignupComponent } from './signup.component';
+>>>>>>> ec495df6874c4b6ecbd769d4aaf173f241055fbe
 
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.css'],
   standalone: true,
+<<<<<<< HEAD
   imports: [CommonModule, FormsModule,]
+=======
+  imports: [CommonModule, FormsModule, SignupComponent]
+>>>>>>> ec495df6874c4b6ecbd769d4aaf173f241055fbe
 })
 export class LoginComponent {
   email: string = '';
@@ -22,10 +30,18 @@ export class LoginComponent {
     private router: Router,
     private authService: AuthService
   ) {}
+<<<<<<< HEAD
   
   onSubmit(): void {
     this.isLoading = true;
     this.errorMessage = '';
+=======
+
+  onSubmit(): void {
+    this.isLoading = true;
+    this.errorMessage = '';
+
+>>>>>>> ec495df6874c4b6ecbd769d4aaf173f241055fbe
     this.authService.login(this.email, this.password).subscribe({
       next: (user: User) => {
         this.isLoading = false;
@@ -42,5 +58,15 @@ export class LoginComponent {
     });
   }
 
+<<<<<<< HEAD
   
+=======
+  openSignupModal(): void {
+    this.showSignupModal = true;
+  }
+
+  closeSignupModal(): void {
+    this.showSignupModal = false;
+  }
+>>>>>>> ec495df6874c4b6ecbd769d4aaf173f241055fbe
 } 
