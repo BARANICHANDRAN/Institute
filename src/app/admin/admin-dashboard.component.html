@@ -1,48 +1,40 @@
-<div class="admin-dashboard">
-  <header class="dashboard-header">
-    <h1>Admin Dashboard</h1>
-    <div class="user-info">
-      <span>Welcome, {{ currentUser?.name }}</span>
-      <button (click)="logout()" class="logout-button">Logout</button>
-    </div>
-  </header>
-
-  <div class="dashboard-content">
-    <div class="stats-grid">
-      <div class="stat-card">
-        <h3>Total Students</h3>
-        <p class="stat-number">1,234</p>
-      </div>
-      <div class="stat-card">
-        <h3>Active Courses</h3>
-        <p class="stat-number">45</p>
-      </div>
-      <div class="stat-card">
-        <h3>Total Revenue</h3>
-        <p class="stat-number">$123,456</p>
-      </div>
-      <div class="stat-card">
-        <h3>Pending Approvals</h3>
-        <p class="stat-number">12</p>
+<div class="admin-container">
+  <div class="admin-content">
+    <div class="dashboard-header">
+      <h1>Admin Dashboard</h1>
+      <div class="user-info">
+        <span>Welcome, {{ currentUser?.name }}</span>
+        <button class="logout-button" (click)="logout()">Logout</button>
       </div>
     </div>
 
-    <div class="recent-activity">
-      <h2>Recent Activity</h2>
-      <div class="activity-list">
-        <div class="activity-item">
-          <span class="activity-time">10:30 AM</span>
-          <span class="activity-text">New student registration: John Doe</span>
-        </div>
-        <div class="activity-item">
-          <span class="activity-time">09:45 AM</span>
-          <span class="activity-text">Course "Web Development" updated</span>
-        </div>
-        <div class="activity-item">
-          <span class="activity-time">09:15 AM</span>
-          <span class="activity-text">Payment received from Jane Smith</span>
+    <div class="dashboard-content">
+      <div class="action-bar">
+        <button class="add-student-button" (click)="openAddStudentModal()">
+          Add New Student
+        </button>
+      </div>
+
+      <div class="students-section">
+        <h2>Students List</h2>
+        <div class="error-message" *ngIf="errorMessage">{{ errorMessage }}</div>
+        
+        <div class="students-grid">
+          <div class="student-card" *ngFor="let student of students">
+            <h3>{{ student.name }}</h3>
+            <p><strong>Email:</strong> {{ student.email }}</p>
+            <p><strong>Phone:</strong> {{ student.phone }}</p>
+            <p><strong>Course:</strong> {{ student.course }}</p>
+            <p><strong>Incharge:</strong> {{ student.incharge }}</p>
+          </div>
         </div>
       </div>
     </div>
   </div>
+
+  <app-add-student-modal
+    *ngIf="showAddStudentModal"
+    (studentAdded)="onStudentAdded()"
+    (close)="closeAddStudentModal()">
+  </app-add-student-modal>
 </div> 

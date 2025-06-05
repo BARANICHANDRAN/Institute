@@ -1,0 +1,82 @@
+<div class="modal-overlay">
+  <div class="modal-content">
+    <div class="modal-header">
+      <h2>Add New Student</h2>
+      <button class="close-button" (click)="closeModal()">&times;</button>
+    </div>
+
+    <form [formGroup]="studentForm" (ngSubmit)="onSubmit()" class="student-form">
+      <div class="form-group">
+        <label for="name">Name</label>
+        <input type="text" id="name" formControlName="name" placeholder="Enter student name">
+        <div class="error-message" *ngIf="studentForm.get('name')?.errors?.['required'] && studentForm.get('name')?.touched">
+          Name is required
+        </div>
+        <div class="error-message" *ngIf="studentForm.get('name')?.errors?.['minlength'] && studentForm.get('name')?.touched">
+          Name must be at least 3 characters
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="email">Email</label>
+        <input type="email" id="email" formControlName="email" placeholder="Enter email address">
+        <div class="error-message" *ngIf="studentForm.get('email')?.errors?.['required'] && studentForm.get('email')?.touched">
+          Email is required
+        </div>
+        <div class="error-message" *ngIf="studentForm.get('email')?.errors?.['email'] && studentForm.get('email')?.touched">
+          Please enter a valid email
+        </div>
+        <div class="error-message" *ngIf="studentForm.get('email')?.errors?.['emailExists']">
+          This email is already registered
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="phone">Phone</label>
+        <input type="tel" id="phone" formControlName="phone" placeholder="Enter phone number">
+        <div class="error-message" *ngIf="studentForm.get('phone')?.errors?.['required'] && studentForm.get('phone')?.touched">
+          Phone number is required
+        </div>
+        <div class="error-message" *ngIf="studentForm.get('phone')?.errors?.['pattern'] && studentForm.get('phone')?.touched">
+          Please enter a valid 10-digit phone number
+        </div>
+        <div class="error-message" *ngIf="studentForm.get('phone')?.errors?.['phoneExists']">
+          This phone number is already registered
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="course">Course</label>
+        <select id="course" formControlName="course">
+          <option value="">Select a course</option>
+          <option *ngFor="let course of courses" [value]="course.id">{{course.name}}</option>
+        </select>
+        <div class="error-message" *ngIf="studentForm.get('course')?.errors?.['required'] && studentForm.get('course')?.touched">
+          Please select a course
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="incharge">Incharge</label>
+        <select id="incharge" formControlName="incharge">
+          <option value="">Select an incharge</option>
+          <option *ngFor="let incharge of incharges" [value]="incharge.id">{{incharge.name}}</option>
+        </select>
+        <div class="error-message" *ngIf="studentForm.get('incharge')?.errors?.['required'] && studentForm.get('incharge')?.touched">
+          Please select an incharge
+        </div>
+      </div>
+
+      <div class="form-actions">
+        <button type="button" class="cancel-button" (click)="closeModal()">Cancel</button>
+        <button type="submit" class="submit-button" [disabled]="studentForm.invalid || isSubmitting">
+          {{ isSubmitting ? 'Adding...' : 'Add Student' }}
+        </button>
+      </div>
+
+      <div class="error-message" *ngIf="errorMessage">
+        {{ errorMessage }}
+      </div>
+    </form>
+  </div>
+</div> 

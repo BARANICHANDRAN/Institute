@@ -21,12 +21,12 @@ export class StudentDashboardComponent implements OnInit {
   ngOnInit(): void {
     this.currentUser = this.authService.getCurrentUser();
     if (!this.currentUser || this.currentUser.role !== 'student') {
-      this.router.navigate(['/login']);
+      this.router.navigate(['']);
     }
   }
 
   logout(): void {
     this.authService.logout();
-    this.router.navigate(['/login']);
+    this.router.navigate(['']);
   }
 } 

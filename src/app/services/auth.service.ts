@@ -46,7 +46,6 @@ export class AuthService {
             name: user.name
           };
           
-          // Save user to localStorage
           localStorage.setItem('currentUser', JSON.stringify(userData));
           this.currentUserSubject.next(userData);
           
@@ -62,7 +61,7 @@ export class AuthService {
   logout(): void {
     localStorage.removeItem('currentUser');
     this.currentUserSubject.next(null);
-    this.router.navigate(['/login']);
+    this.router.navigate(['']);
   }
 
   isAuthenticated(): boolean {
