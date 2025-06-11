@@ -12,12 +12,9 @@
       <h2>My Courses</h2>
       <div class="course-grid">
         <div class="course-card">
-          <h3>Web Development</h3>
-          <p class="course-progress">Progress: 75%</p>
-          <div class="progress-bar">
-            <div class="progress" style="width: 75%"></div>
-          </div>
-          <button class="continue-button">Continue Learning</button>
+          <h3>Java Code</h3>
+          <p>Date:{{ today | date:'fullDate' }}</p>
+          <button class="continue-button" (click)="openCompiler()">Take Test</button>
         </div>
         <div class="course-card">
           <h3>Data Science</h3>

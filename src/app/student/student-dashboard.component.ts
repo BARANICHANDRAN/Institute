@@ -5,6 +5,35 @@ import { AuthService } from '../services/auth.service';
 import { User } from '../models/user.model';
 import { StudentDashboardService } from '../services/student-dashboard.service';
 
+interface Course {
+  id: number;
+  name: string;
+  instructor: string;
+  schedule: string;
+  progress: number;
+}
+
+interface Attendance {
+  present: number;
+  absent: number;
+  total: number;
+  percentage: number;
+}
+
+interface Progress {
+  completedCourses: number;
+  totalCourses: number;
+  gpa: number;
+}
+
+interface Assignment {
+  id: number;
+  title: string;
+  course: string;
+  dueDate: string;
+  status: 'pending' | 'submitted' | 'graded';
+}
+
 @Component({
   selector: 'app-student-dashboard',
   templateUrl: './student-dashboard.component.html',
@@ -15,11 +44,12 @@ import { StudentDashboardService } from '../services/student-dashboard.service';
 export class StudentDashboardComponent implements OnInit {
   currentUser: User | null = null;
   studentProfile: User | null = null;
-  courses: any[] = [];
-  attendance: any = null;
-  progress: any = null;
-  assignments: any[] = [];
+  courses: Course[] = [];
+  attendance: Attendance | null = null;
+  progress: Progress | null = null;
+  assignments: Assignment[] = [];
   errorMessage = '';
+  today: Date = new Date();
 
   constructor(
     private router: Router,
@@ -30,45 +60,75 @@ export class StudentDashboardComponent implements OnInit {
   ngOnInit(): void {
     this.currentUser = this.authService.getCurrentUser();
     if (!this.currentUser || this.currentUser.role !== 'student') {
-      this.router.navigate(['']);
+      this.router.navigate(['/login']);
+      return;
     }
     this.loadStudentData();
   }
 
-  loadStudentData() {
+  loadStudentData(): void {
     // Load student profile
-    this.studentDashboardService.getStudentProfile().subscribe(
-      profile => this.studentProfile = profile,
-      error => this.errorMessage = 'Failed to load profile'
-    );
+    this.studentDashboardService.getStudentProfile().subscribe({
+      next: (profile) => {
+        this.studentProfile = profile;
+      },
+      error: (error) => {
+        console.error('Error loading profile:', error);
+        this.errorMessage = 'Failed to load profile. Please try again later.';
+      }
+    });
 
     // Load courses
-    this.studentDashboardService.getStudentCourses().subscribe(
-      courses => this.courses = courses,
-      error => this.errorMessage = 'Failed to load courses'
-    );
+    this.studentDashboardService.getStudentCourses().subscribe({
+      next: (courses) => {
+        this.courses = courses;
+      },
+      error: (error) => {
+        console.error('Error loading courses:', error);
+        this.errorMessage = 'Failed to load courses. Please try again later.';
+      }
+    });
 
     // Load attendance
-    this.studentDashboardService.getStudentAttendance().subscribe(
-      attendance => this.attendance = attendance,
-      error => this.errorMessage = 'Failed to load attendance'
-    );
+    this.studentDashboardService.getStudentAttendance().subscribe({
+      next: (attendance) => {
+        this.attendance = attendance;
+      },
+      error: (error) => {
+        console.error('Error loading attendance:', error);
+        this.errorMessage = 'Failed to load attendance. Please try again later.';
+      }
+    });
 
     // Load progress
-    this.studentDashboardService.getStudentProgress().subscribe(
-      progress => this.progress = progress,
-      error => this.errorMessage = 'Failed to load progress'
-    );
+    this.studentDashboardService.getStudentProgress().subscribe({
+      next: (progress) => {
+        this.progress = progress;
+      },
+      error: (error) => {
+        console.error('Error loading progress:', error);
+        this.errorMessage = 'Failed to load progress. Please try again later.';
+      }
+    });
 
     // Load assignments
-    this.studentDashboardService.getStudentAssignments().subscribe(
-      assignments => this.assignments = assignments,
-      error => this.errorMessage = 'Failed to load assignments'
-    );
+    this.studentDashboardService.getStudentAssignments().subscribe({
+      next: (assignments) => {
+        this.assignments = assignments;
+      },
+      error: (error) => {
+        console.error('Error loading assignments:', error);
+        this.errorMessage = 'Failed to load assignments. Please try again later.';
+      }
+    });
+  }
+
+  openCompiler(): void {
+    this.router.navigate(['/compiler']);
   }
 
   logout(): void {
     this.authService.logout();
-    this.router.navigate(['']);
+    this.router.navigate(['/login']);
   }
 }

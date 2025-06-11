@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
@@ -13,7 +13,7 @@ import { SignupComponent } from './signup.component';
   standalone: true,
   imports: [CommonModule, FormsModule, SignupComponent]
 })
-export class LoginComponent {
+export class LoginComponent implements OnInit {
   email: string = '';
   password: string = '';
   errorMessage: string = '';
@@ -25,7 +25,22 @@ export class LoginComponent {
     private authService: AuthService
   ) {}
 
+  ngOnInit(): void {
+    // Check if user is already logged in
+    if (this.authService.isAuthenticated()) {
+      const user = this.authService.getCurrentUser();
+      if (user) {
+        this.router.navigate([user.role === 'admin' ? '/admin' : '/student']);
+      }
+    }
+  }
+
   onSubmit(): void {
+    if (!this.email || !this.password) {
+      this.errorMessage = 'Please enter both email and password';
+      return;
+    }
+
     this.isLoading = true;
     this.errorMessage = '';
 
@@ -38,9 +53,9 @@ export class LoginComponent {
           this.router.navigate(['/student']);
         }
       },
-      error: (error: string) => {
+      error: (error) => {
         this.isLoading = false;
-        this.errorMessage = error;
+        this.errorMessage = error.message || 'An error occurred during login';
       }
     });
   }

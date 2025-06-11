@@ -1,0 +1,45 @@
+<div class="compiler-container">
+  <div class="compiler-header">
+    <h1>Java Code Test</h1>
+    <button class="back-button" (click)="goBack()">Back to Dashboard</button>
+  </div>
+
+  <div class="question-container">
+    <div class="question-info">
+      <h2>{{ questions[currentQuestionIndex].title }}</h2>
+      <p>{{ questions[currentQuestionIndex].description }}</p>
+      
+      <div class="test-cases">
+        <h3>Test Cases:</h3>
+        <div *ngFor="let testCase of questions[currentQuestionIndex].testCases" class="test-case">
+          <p>Input: {{ testCase.input }}</p>
+          <p>Expected Output: {{ testCase.expectedOutput }}</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="code-editor">
+      <textarea
+        [(ngModel)]="userCode"
+        class="code-input"
+        spellcheck="false"
+        placeholder="Write your code here..."
+      ></textarea>
+    </div>
+
+    <div class="output-container">
+      <h3>Output:</h3>
+      <pre class="output">{{ output }}</pre>
+      <div *ngIf="isSubmitted" class="score">
+        Score: {{ score }}%
+      </div>
+    </div>
+
+    <div class="action-buttons">
+      <button (click)="runCode()" class="run-button">Run Code</button>
+      <button (click)="submitTest()" class="submit-button" [disabled]="!isSubmitted">
+        {{ isLastQuestion ? 'Finish Test' : 'Submit & Next' }}
+      </button>
+    </div>
+  </div>
+</div> 
