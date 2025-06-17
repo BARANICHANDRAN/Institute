@@ -1,7 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
+import { interval, Subscription } from 'rxjs';
 
 interface Question {
   id: number;
@@ -14,6 +15,12 @@ interface Question {
   }[];
 }
 
+interface ProgrammingLanguage {
+  id: string;
+  name: string;
+  extension: string;
+}
+
 @Component({
   selector: 'app-compiler',
   templateUrl: './compiler.component.html',
@@ -21,7 +28,7 @@ interface Question {
   standalone: true,
   imports: [CommonModule, FormsModule]
 })
-export class CompilerComponent implements OnInit {
+export class CompilerComponent implements OnInit, OnDestroy {
   questions: Question[] = [
     {
       id: 1,
@@ -57,11 +64,57 @@ export class CompilerComponent implements OnInit {
   isSubmitted = false;
   score = 0;
   totalScore = 0;
+  private timerSubscription: Subscription | null = null;
+  timeRemaining: number = 0.5 * 60; // 15 minutes in seconds
+  timerDisplay: string = '00:30';
+
+  programmingLanguages: ProgrammingLanguage[] = [
+    { id: 'java', name: 'Java', extension: '.java' },
+    { id: 'python', name: 'Python', extension: '.py' },
+    { id: 'javascript', name: 'JavaScript', extension: '.js' },
+    { id: 'cpp', name: 'C++', extension: '.cpp' },
+    { id: 'csharp', name: 'C#', extension: '.cs' }
+  ];
+
+  selectedLanguage: string = 'java';
 
   constructor(private router: Router) {}
 
   ngOnInit(): void {
     this.loadQuestion();
+    this.startTimer();
+  }
+
+  ngOnDestroy(): void {
+    if (this.timerSubscription) {
+      this.timerSubscription.unsubscribe();
+    }
+  }
+
+  private startTimer(): void {
+    this.timerSubscription = interval(1000).subscribe(() => {
+      if (this.timeRemaining > 0) {
+        this.timeRemaining--;
+        this.updateTimerDisplay();
+      } else {
+        this.handleTimeUp();
+      }
+    });
+  }
+
+  private updateTimerDisplay(): void {
+    const minutes = Math.floor(this.timeRemaining / 60);
+    const seconds = this.timeRemaining % 60;
+    this.timerDisplay = `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+  }
+
+  private handleTimeUp(): void {
+    if (this.timerSubscription) {
+      this.timerSubscription.unsubscribe();
+    }
+    alert('Time is up! Your test will be submitted automatically.');
+    this.submitTest();
+    this.router.navigate(['/student']);
   }
 
   get isLastQuestion(): boolean {
@@ -114,7 +167,6 @@ export class CompilerComponent implements OnInit {
     this.totalScore += this.score;
 
     if (this.isLastQuestion) {
-      // Calculate final score and show results
       const finalScore = this.totalScore / this.questions.length;
       alert(`Test completed! Your final score is: ${finalScore.toFixed(2)}%`);
       this.router.navigate(['/student']);
@@ -125,9 +177,9 @@ export class CompilerComponent implements OnInit {
     }
   }
 
-  goBack(): void {
-    if (confirm('Are you sure you want to leave? Your progress will be lost.')) {
-      this.router.navigate(['/student']);
-    }
+  onLanguageChange(language: string): void {
+    this.selectedLanguage = language;
+    // You can add additional logic here to handle language-specific features
+    // For example, changing syntax highlighting, compiler settings, etc.
   }
 } 
